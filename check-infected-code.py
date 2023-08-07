@@ -48,7 +48,7 @@ def save_to_excel(infected_code_list, output_file):
 
 if __name__ == "__main__":
     # Replace "your_directory_path" with the path to the directory containing PHP files to scan.
-    directory_path = "/home/w3care/Desktop/python-ai/all_infected_code/"
+    directory_path = "/home/dogshare/public_html" 
     output_excel_file = "infected_code_list.xlsx"
 
     infected_code_list = find_infected_code_in_php(directory_path)
