@@ -7,17 +7,16 @@ def find_infected_code_in_php(directory):
 
     patterns = [
         (r'\$O00OO_0_O_=urldecode\("([^"]+)"\);\$O000OOO___=\$O00OO_0_O_\{(\d+)\}', 'Pattern 1'),
-        (r'base64_decode\(\s*["\']([^"\']+)["\']\s*\)', 'Pattern 2'),
-        (r'\b(eval|exec|system|shell_exec)\s*\(', 'Pattern 3'),
-        (r'(?<![\w-])_POST\[["\'].*["\']\]', 'Pattern 4'),
-        (r'(?<![\w-])_GET\[["\'].*["\']\]', 'Pattern 5'),
-        (r'(?<![\w-])_REQUEST\[["\'].*["\']\]', 'Pattern 6'),
-        (r'(?<![\w-])passthru\s*\(', 'Pattern 7'),
-        (r'(?<![\w-])popen\s*\(', 'Pattern 8'),
-        (r'(?<![\w-])proc_open\s*\(', 'Pattern 9'),
-        (r'(?<![\w-])assert\s*\(', 'Pattern 10')
+        (r'\$[A-Za-z0-9_]+=\s*base64_decode\("([^"]+)"\);', 'Pattern 2'),
+        (r'(?<![\w-])eval\s*\(\s*base64_decode\s*\(\s*["\']([^"\']+)["\']\s*\)\s*\)', 'Pattern 3'),
+        (r'(?<![\w-])gzinflate\s*\(\s*base64_decode\s*\(\s*["\']([^"\']+)["\']\s*\)\s*\)', 'Pattern 4'),
+        (r'(?<![\w-])str_rot13\s*\(\s*["\']([^"\']+)["\']\s*\)', 'Pattern 5'),
+        (r'(?<![\w-])base64_decode\s*\(\s*str_rot13\s*\(\s*["\']([^"\']+)["\']\s*\)\s*\)', 'Pattern 6'),
+        (r'(?<![\w-])pack\s*\(\s*["\']H*["\']\s*,\s*["\']([^"\']+)["\']\s*\)', 'Pattern 7'),
+        (r'(?<![\w-])base64_decode\s*\(\s*bin2hex\s*\(\s*["\']([^"\']+)["\']\s*\)\s*\)', 'Pattern 8'),
         # Add more patterns as needed
     ]
+
 
     for root, _, files in os.walk(directory):
         for file_name in files:
